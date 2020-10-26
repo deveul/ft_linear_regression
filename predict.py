@@ -32,7 +32,8 @@ def main():
             if input == 'quit':
                 keep_going = False
             else:
-                print("Prix estimé = {}".format(theta_0 + theta_1 * input))
+                result = (theta_0 + theta_1 * input)
+                print("Prix estimé = {}".format(result))
         else:
             pass
 

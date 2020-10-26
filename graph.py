@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 # -*-coding:Utf-8 -*
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+from matplotlib import pyplot as plt
 import numpy as np
 
 def graph(data, theta_0, theta_1):
+    # plt.axes = (0, max(data, key=lambda x:x['km'])['km'], \
+        # 0, max(data, key=lambda x:x['price'])['price']])
     plt.axes = ([min(data, key=lambda x:x['km'])['km'], max(data, key=lambda x:x['km'])['km'], \
         min(data, key=lambda x:x['price'])['price'], max(data, key=lambda x:x['price'])['price']])
     # axes = plt.gca()
@@ -23,6 +26,7 @@ def graph(data, theta_0, theta_1):
     # On affiche les points du data set
     for row in data:
         plt.scatter(row['km'], row['price'], c='purple')
+
     # On affiche la droite avec les valeurs de theta trouvées
     plt.plot(x, y, linestyle='-', label="price = {} {} * km".format(round(theta_0, 2), round(theta_1, 2)))
     

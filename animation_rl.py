@@ -5,7 +5,7 @@ from matplotlib.animation import FuncAnimation
 def animation_rl(data, history):
     anim_running = True
     fig, ax = plt.subplots()
-    ln, = plt.plot([], [])
+    ln, = plt.plot([], [], '-')
     
     def init():
         ax.clear()

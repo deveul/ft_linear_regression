@@ -16,16 +16,15 @@ def animation_rl(data, history):
         plt.xlabel('km')
         plt.ylabel('price')
         plt.title('Linear Regression')
-        ln.set_data([],[])
 
         # On affiche les points du data set
-        for row in data:
-            plt.scatter(row['km'], row['price'], c='purple')
+        plt.scatter([x['km'] for x in data], [y['price'] for y in data], c='purple')
 
+        ln.set_data([],[])
         return ln,
         
     def onClick(event):
-        nonlocal anim_running
+        global anim_running
         if anim_running:
             anim.event_source.stop()
             anim_running = False
@@ -34,7 +33,7 @@ def animation_rl(data, history):
             anim_running = True
 
     def press(event):
-        nonlocal anim_running
+        global anim_running
         if event.key == 'enter':
             anim.frame_seq = anim.new_frame_seq() 
             if anim_running == False:

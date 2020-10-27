@@ -27,6 +27,17 @@ class Train:
     def get_data(self):
         with open('data.csv', 'r') as data_file:
             data_reader = csv.DictReader(data_file)
+            headers = data_reader.fieldnames
+            if 'km' not in headers:
+                print("km column is missing")
+                exit()
+            if 'price' not in headers:
+                print("price column is missing")
+                exit()
+            if len(headers) > 2:
+                print("Too many columns in csv, there should be only two (km and price).")
+                exit()
+            
             data = list(data_reader)
             try :
                 data = [dict([key, float(value)] for key, value in row.items()) for row in data]
@@ -88,17 +99,17 @@ class Train:
 
             if abs(gradient_zero) < self.precision and abs(gradient_one) < self.precision:
                 break
+        self.theta_0 = self.theta_0 * self.max_price
+        self.theta_1 = self.theta_1 * self.max_price / self.max_km 
 
 def main():
     args = parse_arguments()
     train = Train(args.iteration, args.learning_rate, args.precision)
     train.normalize_data()
     train.train(args.animation)
-    train.theta_0 = train.theta_0 * train.max_price
-    train.theta_1 = train.theta_1 * train.max_price / train.max_km 
     if args.graph:
         graph(train.data, train.theta_0, train.theta_1)
-    if args.animation:
+    elif args.animation:
         animation_rl(train.data, train.history_gradient)
     train.dump_theta_values()
 

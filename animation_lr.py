@@ -6,7 +6,7 @@ class AnimationLr():
     def __init__(self, data, history):
         self.anim_running = True
         self.fig, self.ax = plt.subplots()
-        self.ln, = plt.plot([], [], '-')
+        self.ln, = plt.plot([], [], '-', c=u'#1f77b4')
         self.anim = None
         self.data = data
         self.min_km = min(self.data, key=lambda x:x['km'])['km']
@@ -16,16 +16,20 @@ class AnimationLr():
     
     def init_animation(self):
         self.ax.clear()
-        plt.axes = ([0, self.max_km, 0, self.max_price])
         plt.axhline(0, color='grey')
         plt.axvline(0, color='grey')
         plt.xlabel('km')
         plt.ylabel('price')
-        plt.title('Linear Regression')
+        plt.title('Linear Regression evolution')
+        plt.plot([],[], '-', label="price = θ₀ + km * θ₁", c=u'#1f77b4')
         self.ln.set_data([],[])
+        # self.ln.set_label("")
 
         # On affiche les points du data set
-        plt.scatter([x['km'] for x in self.data], [y['price'] for y in self.data], c='purple')
+        plt.scatter([x['km'] for x in self.data], [y['price'] for y in self.data], c='purple', label='Values of data set')
+        self.ax.set_ylim(bottom=0)
+        self.ax.set_xlim(left=0)
+        plt.legend(loc="lower center")
 
         return self.ln,
 

@@ -1,6 +1,15 @@
 #!/usr/bin/python3
 # -*-coding:Utf-8 -*
 import argparse
+import os.path
+
+def is_valid_file(parser, arg):
+    if not os.path.exists(arg):
+        parser.error("The file {} does not exist!".format(arg))
+    elif not arg.endswith('.csv'):
+        parser.error("The file {} has no csv extension!".format(arg))
+    else:
+        return arg
 
 def range_limited_float_type(arg):
     """ Type function for argparse - a float within some predefined bounds """
@@ -33,7 +42,8 @@ def positive_int_type(arg):
     return nb
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(usage='python3 %(prog)s [-h] [-s] [-g | -a] [-i ITERATION] [-l LEARNING_RATE] [-p PRECISION]', description="Linear regression with gradient descent in order to have correct results with predict.py")
+    parser = argparse.ArgumentParser(usage='python3 %(prog)s -d DATA_FILE [-h] [-s] [-g | -a] [-i ITERATION] [-l LEARNING_RATE] [-p PRECISION]', description="Linear regression with gradient descent in order to have correct results with predict.py")
+    parser.add_argument("-d", "--data_file", help="the csv file containing the data set", required=True, type=lambda x: is_valid_file(parser, x))
     group = parser.add_mutually_exclusive_group()
     parser.add_argument("-s", "--square", help="does the linear regression with the least square method, only '-g' option available", action="store_true")
     group.add_argument("-g", "--graph", help="open a graph representing the data", action="store_true")

@@ -12,7 +12,8 @@ from animation_lr import animation_lr
 from parse_args import parse_arguments
 
 class Train:
-    def __init__(self, iteration, learning_rate, precision):
+    def __init__(self, data_file, iteration, learning_rate, precision):
+        self.data_file = data_file
         self.data = self.get_data()
         self.normalized_data = None
         self.min_price = 0
@@ -27,7 +28,7 @@ class Train:
         self.precision = precision
 
     def get_data(self):
-        with open('data.csv', 'r') as data_file:
+        with open(self.data_file, 'r') as data_file:
             data_reader = csv.DictReader(data_file)
             headers = data_reader.fieldnames
             if 'km' not in headers:
@@ -123,7 +124,7 @@ class Train:
 
 def main():
     args = parse_arguments()
-    train = Train(args.iteration, args.learning_rate, args.precision)
+    train = Train(args.data_file, args.iteration, args.learning_rate, args.precision)
     if args.square:
         train.train_with_least_square()
     else :

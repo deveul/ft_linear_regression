@@ -23,7 +23,6 @@ class AnimationLr():
         plt.title('Linear Regression evolution')
         plt.plot([],[], '-', label="price = θ₀ + km * θ₁", c=u'#1f77b4')
         self.ln.set_data([],[])
-        # self.ln.set_label("")
 
         # On affiche les points du data set
         plt.scatter([x['km'] for x in self.data], [y['price'] for y in self.data], c='purple', label='Values of data set')

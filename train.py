@@ -4,9 +4,11 @@
 import json
 import csv
 import copy
+from statistics import mean
+import numpy as np
 
 from graph import graph
-from animation_rl import animation_rl
+from animation_lr import animation_lr
 from parse_args import parse_arguments
 
 class Train:
@@ -102,15 +104,31 @@ class Train:
         self.theta_0 = self.theta_0 * self.max_price
         self.theta_1 = self.theta_1 * self.max_price / self.max_km 
 
+    def train_with_least_square(self):
+        x = np.float_([x['km'] for x in self.data])
+        y = np.float_([x['price'] for x in self.data])
+        n = len(x)   
+        m_x, m_y = mean(x), mean(y)
+        Somme_xy = sum(y*x) - n*m_y*m_x
+        Somme_xx = sum(x*x) - n*m_x*m_x
+        a = Somme_xy / Somme_xx
+        b = m_y - a*m_x  
+        self.theta_0 = b
+        self.theta_1 = a
+
+
 def main():
     args = parse_arguments()
     train = Train(args.iteration, args.learning_rate, args.precision)
-    train.normalize_data()
-    train.train(args.animation)
+    if args.square:
+        train.train_with_least_square()
+    else :
+        train.normalize_data()
+        train.train(args.animation)
+        if args.animation:
+            animation_lr(train.data, train.history_gradient)
     if args.graph:
         graph(train.data, train.theta_0, train.theta_1)
-    elif args.animation:
-        animation_rl(train.data, train.history_gradient)
     train.dump_theta_values()
 
 if __name__ == "__main__":

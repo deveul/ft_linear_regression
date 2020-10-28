@@ -33,8 +33,9 @@ def positive_int_type(arg):
     return nb
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(usage='python3 %(prog)s [-h] [-g | -a] [-i ITERATION] [-l LEARNING_RATE] [-p PRECISION]', description="Linear regression with gradient descent in order to have correct results with predict.py")
+    parser = argparse.ArgumentParser(usage='python3 %(prog)s [-h] [-s] [-g | -a] [-i ITERATION] [-l LEARNING_RATE] [-p PRECISION]', description="Linear regression with gradient descent in order to have correct results with predict.py")
     group = parser.add_mutually_exclusive_group()
+    parser.add_argument("-s", "--square", help="does the linear regression with the least square method, only '-g' option available", action="store_true")
     group.add_argument("-g", "--graph", help="open a graph representing the data", action="store_true")
     group.add_argument("-a", "--animation", help="display the evolution of the graph during the gradient descent", action="store_true")
     parser.add_argument("-i", "--iteration", help="Maximum number of iteration for gradient descent", type=positive_int_type, default=2147483647)

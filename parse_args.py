@@ -8,8 +8,8 @@ def range_limited_float_type(arg):
         f = float(arg)
     except ValueError:    
         raise argparse.ArgumentTypeError("Learning rate must be a floating point number")
-    if f < 0.0005 or f > 1:
-        raise argparse.ArgumentTypeError("Learning rate must be between 0.0005 1")
+    if f < 0.0001 or f > 1:
+        raise argparse.ArgumentTypeError("Learning rate must be between 0.0001 1")
     return f
 
 def limited_float_type_precision(arg):

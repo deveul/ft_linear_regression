@@ -60,9 +60,13 @@ class Train:
             'theta_0': self.theta_0,
             'theta_1': self.theta_1
         }
-        with open('value_lr.json', 'w') as json_file:
-            json.dump(theta_values, json_file)
-            print("value_lr.json updated:\n\ttheta_0: {}\n\ttheta_1: {}".format(self.theta_0, self.theta_1))
+        try:
+            with open('value_lr.json', 'w') as json_file:
+                json.dump(theta_values, json_file)
+                print("value_lr.json updated:\n\ttheta_0: {}\n\ttheta_1: {}".format(self.theta_0, self.theta_1))
+        except PermissionError:
+            print("Vous n'avez pas les droits pour écrire dans le fichier value_lr.json")
+            exit()
 
     def get_estimated_price(self, km):
         return self.theta_0 + self.theta_1 * km

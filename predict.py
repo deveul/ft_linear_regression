@@ -20,8 +20,18 @@ def get_user_input():
 
 def main():
     theta = None
-    with open('value_lr.json', 'r') as json_file:
-        theta = json.load(json_file)
+    try:
+        with open('value_lr.json', 'r') as json_file:
+            theta = json.load(json_file)
+    except FileNotFoundError:
+        theta = {
+            "theta_0": 0,
+            "theta_1": 0
+        }
+    except PermissionError:
+        print("Vous n'avez pas les droits pour lire le fichier value_lr.json")
+        exit()
+
     theta_0 = theta["theta_0"]
     theta_1 = theta["theta_1"]
     print("résolution avec theta_0={} et theta_1={}".format(theta_0, theta_1))
